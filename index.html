@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .carousel {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            height: 530px;
+            width: 500px;
+            overflow: hidden;
+        }
+
+        .image-container {
+            display: flex;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in;
+        }
+
+        .image-container img {
+            height: 500px;
+            width: 500px;
+            object-fit: cover;
+        }
+
+        .btn {
+            background-color: rebeccapurple;
+            color: #fff;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            width: 49.6%;
+        }
+
+        button.btn {
+            right: 0;
+            position: relative;
+            top: 14px;
+            right: -1px;
+            transform: translate(0, -50%);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+    </style>
+    <title>Image Carousel</title>
+</head>
+
+<body>
+    <div class="carousel">
+        <div class="image-container" id="imgs">
+            <img src="https://images.unsplash.com/photo-1599394022918-6c2776530abb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1458&q=80"
+                alt="first-image" />
+            <img src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+                alt="second-image" />
+            <img src="https://images.unsplash.com/photo-1599423300746-b62533397364?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+                alt="third-image" />
+            <img src="https://images.unsplash.com/photo-1599561046251-bfb9465b4c44?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1492&q=80"
+                alt="fourth-image" />
+        </div>
+
+        <div class="buttons-container">
+            <button id="left" class="btn">Prev</button>
+            <button id="right" class="btn">Next</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    const images = document.getElementById('imgs')
+    const leftBtn = document.getElementById('left')
+    const rightBtn = document.getElementById('right')
+
+    let idx = 0
+    let interval = setInterval(run, 2000)
+
+    function run() {
+        idx++
+        changeImage()
+    }
+
+    function changeImage() {
+        if (idx > images.children.length - 1) {
+            idx = 0
+        } else if (idx < 0) {
+            idx = images.children.length - 1
+        }
+        images.style.transform = `translateX(${-idx * 500}px)`
+    }
+
+    function resetInterval() {
+        clearInterval(interval)
+        interval = setInterval(run, 2000)
+    }
+
+    leftBtn.addEventListener('click', () => {
+        idx--
+        changeImage()
+        resetInterval()
+    })
+
+    rightBtn.addEventListener('click', () => {
+        idx++
+        changeImage()
+        resetInterval()
+    })
+</script>
+
+</html>
